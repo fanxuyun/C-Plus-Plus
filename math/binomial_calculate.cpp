@@ -31,6 +31,8 @@ namespace binomial {
  */
 size_t calculate(int32_t n, int32_t k) {
     // basic cases
+    // @fanxuyun: c(n,k) denotes number of cases to choose k from n things.
+    // c(n,k) = c(n,n-k), n>=k
     if (k > (n / 2))
         k = n - k;
     if (k == 1)
@@ -38,6 +40,10 @@ size_t calculate(int32_t n, int32_t k) {
     if (k == 0)
         return 1;
 
+    // @fanxuyun: c(n,k)=n!/(k!*(n-k)!)=(n!/(n-k)!) / k!
+    // n!/(n-k)! = (n-k+1) * (n-k+2) * ... * n
+    // k! = 1 * 2 * ... * k
+    // above 2 value both consists of k value multiplying.
     size_t result = 1;
     for (int32_t i = 1; i <= k; ++i) {
         result *= n - k + i;
@@ -58,6 +64,7 @@ static void tests() {
     assert(math::binomial::calculate(1, 1) == 1);
     assert(math::binomial::calculate(57, 57) == 1);
     assert(math::binomial::calculate(6, 3) == 20);
+    assert(math::binomial::calculate(4, 2) == 6);
     assert(math::binomial::calculate(10, 5) == 252);
     assert(math::binomial::calculate(20, 10) == 184756);
     assert(math::binomial::calculate(30, 15) == 155117520);
