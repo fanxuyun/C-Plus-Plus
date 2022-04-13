@@ -2,28 +2,27 @@
  * @file
  * @brief C++ Program to find Binary Exponent Iteratively and Recursively.
  *
- * Calculate \f$a^b\f$ in \f$O(\log(b))\f$ by converting \f$b\f$ to a
+ * Calculate a^b in O(log(b)) by converting b to a
  * binary number. Binary exponentiation is also known as exponentiation by
  * squaring.
  * @note This is a far better approach compared to naive method which
- * provide \f$O(b)\f$ operations.
+ * provide O(b) operations.
  *
  * Example:
- * </br>10 in base 2 is 1010.
- * \f{eqnarray*}{
- * 2^{10_d} &=& 2^{1010_b} = 2^8 * 2^2\\
- * 2^1 &=& 2\\
- * 2^2 &=& (2^1)^2 = 2^2 = 4\\
- * 2^4 &=& (2^2)^2 = 4^2 = 16\\
- * 2^8 &=& (2^4)^2 = 16^2 = 256\\
- * \f}
- * Hence to calculate 2^10 we only need to multiply \f$2^8\f$ and \f$2^2\f$
- * skipping \f$2^1\f$ and \f$2^4\f$.
+ * 10 in number base 2 is 1010.
+ * 2^10_d = 2^1010_b = 2^8_d * 2^2_d, 10_d means 10 in decimal, 1010_b means
+ * 1010 in binary, which equals to 10_d, this rule applies.
+ * 2^1 = 2
+ * 2^2 = (2^1)^2 = 2^2 = 4
+ * 2^4 = (2^2)^2 = 4^2 = 16
+ * 2^8 = (2^4)^2 = 16^2 = 256
+ * Hence to calculate 2^10 we only need to multiply 2^8 and 2^2
+ * skipping 2^1 and 2^4.
  */
 
 #include <iostream>
 
-/// Recursive function to calculate exponent in \f$O(\log(n))\f$ using binary
+/// Recursive function to calculate exponent in O(log(n)) using binary
 /// exponent.
 int binExpo(int a, int b) {
     if (b == 0) {
@@ -37,7 +36,7 @@ int binExpo(int a, int b) {
     }
 }
 
-/// Iterative function to calculate exponent in \f$O(\log(n))\f$ using binary
+/// Iterative function to calculate exponent in O(log(n)) using binary
 /// exponent.
 int binExpo_alt(int a, int b) {
     int res = 1;
