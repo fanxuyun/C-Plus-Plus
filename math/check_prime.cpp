@@ -2,8 +2,12 @@
  * Copyright 2020 @author omkarlanghe
  *
  * @file
- * A simple program to check if the given number if prime or not.
+ * A simple program to check if the given number is prime or not.
  *
+ * @fanxuyun:
+ * 牛逼！这个判断利用了素数的规律：令i从5开始，步长为6，i和i+2都作为因子需要判断一下。
+ * 有个缺点：部分i和i+2可能本身已经是2/3/5的倍数了，会多做一些判断。
+ * 不好说这个方案性能如何。
  * @brief
  * Reduced all possibilities of a number which cannot be prime.
  * Eg: No even number, except 2 can be a prime number, hence we will increment
