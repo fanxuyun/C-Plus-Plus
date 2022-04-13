@@ -9,9 +9,8 @@
  * @author [Focusucof](https://github.com/Focusucof)
  */
 #define _USE_MATH_DEFINES
-#include <cassert>  /// for assert
-#include <cmath>    /// for M_PI definition and pow()
-#include <cmath>
+#include <cassert>   /// for assert
+#include <cmath>     /// for M_PI definition and pow()
 #include <cstdint>   /// for uint16_t datatype
 #include <iostream>  /// for IO operations
 
@@ -25,6 +24,8 @@ namespace math {
  * @param length is the length of the square
  * @returns area of square
  */
+// @fanxuyun: a funcition template to calculate area of a square with l^2, l is
+// length of edge of square.
 template <typename T>
 T square_area(T length) {
     return length * length;
@@ -36,6 +37,8 @@ T square_area(T length) {
  * @param width is the width of the rectangle
  * @returns area of the rectangle
  */
+// @fanxuyun: a funcition template to calculate area of a rectangle with l*w, l
+// and w are length of long edge and short edge of rectangle, respectively.
 template <typename T>
 T rect_area(T length, T width) {
     return length * width;
@@ -48,6 +51,8 @@ T rect_area(T length, T width) {
  * @param height is the length of the tallest point in the triangle
  * @returns area of the triangle
  */
+// @fanxuyun: a funcition template to calculate area of a triangle with b*h/2, b
+// and h are length of base edge and height of triangle, respectively.
 template <typename T>
 T triangle_area(T base, T height) {
     return base * height / 2;
@@ -59,6 +64,8 @@ T triangle_area(T base, T height) {
  * @param radius is the radius of the circle
  * @returns area of the circle
  */
+// @fanxuyun: a funcition template to calculate area of a circle with PI*r/2, r
+// is length of radius of circle.
 template <typename T>
 T circle_area(T radius) {
     return M_PI * pow(radius, 2);
@@ -71,6 +78,9 @@ T circle_area(T radius) {
  * @param height is the length of the tallest point in the parallelogram
  * @returns area of the parallelogram
  */
+// @fanxuyun: a funcition template to calculate area of a parallelogram with
+// b*h, b and h are length of base edge and height of parallelogram,
+// respectively.
 template <typename T>
 T parallelogram_area(T base, T height) {
     return base * height;
@@ -82,6 +92,8 @@ T parallelogram_area(T base, T height) {
  * @param length is the length of the cube
  * @returns surface area of the cube
  */
+// @fanxuyun: a funcition template to calculate surface area of a cube with
+// 6*l^2, l is length of edge of cube.
 template <typename T>
 T cube_surface_area(T length) {
     return 6 * length * length;
@@ -93,6 +105,8 @@ T cube_surface_area(T length) {
  * @param radius is the radius of the sphere
  * @returns surface area of the sphere
  */
+// @fanxuyun: a funcition template to calculate surface area of a sphere with
+// 4*PI*r/2, r is length of radius of sphere.
 template <typename T>
 T sphere_surface_area(T radius) {
     return 4 * M_PI * pow(radius, 2);
@@ -105,6 +119,8 @@ T sphere_surface_area(T radius) {
  * @param height is the height of the cylinder
  * @returns surface area of the cylinder
  */
+// @fanxuyun: a funcition template to calculate surface area of a cylinder with
+// 2*PI*r^2 + 2*PI*r*h, r is length of radius of cylinder, and h for height.
 template <typename T>
 T cylinder_surface_area(T radius, T height) {
     return 2 * M_PI * radius * height + 2 * M_PI * pow(radius, 2);
@@ -124,6 +140,7 @@ static void test() {
     uint16_t int_expected = 0;  // 16 bit integer expected output
     uint16_t int_area = 0;      // 16 bit integer output
 
+    // @fanxuyun: C++ build-in invalid number, same with matlab
     float float_length = NAN;    // float length input
     float float_expected = NAN;  // float expected output
     float float_area = NAN;      // float output
