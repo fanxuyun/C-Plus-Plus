@@ -32,14 +32,16 @@ class Complex {
      * @param x If the third parameter is 'true' then this x is the absolute
      * value of the complex number, if the third parameter is 'false' then this
      * x is the real value of the complex number (optional).
-     * @param y If the third parameter is 'true' then this y is the argument of
-     * the complex number, if the third parameter is 'false' then this y is the
-     * imaginary value of the complex number (optional).
+     * @param y If the third parameter is 'true' then this y is the phase value
+     * of the complex number, if the third parameter is 'false' then this y is
+     * the imaginary value of the complex number (optional).
      * @param is_polar 'false' by default. If we want to initialise our complex
      * number using polar form then set this to true, otherwise set it to false
      * to use initialiser which initialises real and imaginary values using the
      * first two parameters (optional).
      */
+    // C++ keyword explicit, for class constructor.
+    // refer to [https://zhuanlan.zhihu.com/p/52152355]
     explicit Complex(double x = 0.f, double y = 0.f, bool is_polar = false) {
         if (!is_polar) {
             re = x;
@@ -61,6 +63,8 @@ class Complex {
      * \brief Member function to get real value of our complex number.
      * Member function (getter) to access the class' re value.
      */
+    // @fanxuyun: const function is not allowed to modify member variables,
+    // member variables are read-only for const function.
     double real() const { return this->re; }
 
     /**
@@ -81,8 +85,8 @@ class Complex {
     }
 
     /**
-     * \brief Member function to give the argument of our complex number.
-     * @return Argument of our Complex number in radians.
+     * \brief Member function to give the angle or phase of our complex number.
+     * @return Angle or phase of our Complex number in radians.
      */
     double arg() const { return std::atan2(this->im, this->re); }
 
@@ -143,7 +147,10 @@ class Complex {
         Complex result = *this * ~other;
         double denominator =
             other.real() * other.real() + other.imag() * other.imag();
-        if (denominator != 0) {
+        // @fanxuyun: you cann't judge whether a double variable is 0.
+        // refer to https://blog.csdn.net/xp178171640/article/details/104565053
+        // if (denominator != 0) {
+        if (std::abs(denominator) > 1e-15) {
             result = Complex(result.real() / denominator,
                              result.imag() / denominator);
             return result;
@@ -172,8 +179,12 @@ class Complex {
  * @return 'True' If real and imaginary parts of a and b are same
  * @return 'False' Otherwise.
  */
+// @fanxuyun: since re and im are both private in Complex class, they are
+// accessable only via get-method(real() and imag() public member function).
 bool operator==(const Complex &a, const Complex &b) {
-    return a.real() == b.real() && a.imag() == b.imag();
+    // return a.real() == b.real() && a.imag() == b.imag();
+    return std::abs(a.real() == b.real()) < 1e-15 &&
+           std::abs(a.imag() == b.imag()) < 1e-15;
 }
 
 /**
@@ -183,6 +194,8 @@ bool operator==(const Complex &a, const Complex &b) {
  * @param os The console stream
  * @param num The complex number.
  */
+// @fanxuyun: override operator << to support output complex number with cout.
+// refer to [http://c.biancheng.net/view/2311.html]
 std::ostream &operator<<(std::ostream &os, const Complex &num) {
     os << "(" << num.real();
     if (num.imag() < 0) {
@@ -210,6 +223,10 @@ void tests() {
     std::complex<double> cnum1(x1, y1), cnum2(x2, y2);
     Complex result;
     std::complex<double> expected;
+
+    // @fanxuyun: call operator << override function.
+    std::cout << "Complex number1 is " << num1 << std::endl;
+    std::cout << "Complex number2 is " << num2 << std::endl;
     // Test for addition
     result = num1 + num2;
     expected = cnum1 + cnum2;
@@ -237,10 +254,17 @@ void tests() {
     // Test for division
     result = num1 / num2;
     expected = cnum1 / cnum2;
+    // @fanxuyun: scheme of complex number division maybe a little bit different
+    // between this scheme and std(unknown), so there may be difference between
+    // 2 results, and the test should be modified.
+    // assert(((void)"(1 + 1i) / (1 + 1i) is equal to 1 but the program says "
+    //               "otherwise.\n",
+    //         (result.real() == expected.real() &&
+    //          result.imag() == expected.imag())));
     assert(((void)"(1 + 1i) / (1 + 1i) is equal to 1 but the program says "
                   "otherwise.\n",
-            (result.real() == expected.real() &&
-             result.imag() == expected.imag())));
+            (std::abs(result.real() - expected.real()) < 1e-15 &&
+             std::abs(result.imag() - expected.imag()) < 1e-15)));
     std::cout << "Fourth test passes." << std::endl;
     // Test for conjugates
     result = ~num1;
